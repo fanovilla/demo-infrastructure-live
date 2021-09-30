@@ -14,3 +14,21 @@ remote_state {
     #dynamodb_table = "my-lock-table"
   }
 }
+
+generate "providers" {
+  path      = "providers.tf"
+  if_exists = "overwrite"
+  contents  = <<EOF
+    terraform {
+      required_providers {
+        aws = {
+          source  = "hashicorp/aws"
+          version = "~> 3.0"
+        }
+      }
+    }
+    provider "aws" {
+      region = "us-east-1"
+    }
+EOF
+}
